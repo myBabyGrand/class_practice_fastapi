@@ -326,3 +326,7 @@ cython_debug/
 
 /.idea/
 /example/pyvenv.cfg
+/book/
+*/Scripts/*
+*/.idea/*
+*/*.cfg
