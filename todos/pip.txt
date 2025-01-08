@@ -1,2 +1,7 @@
 pip install fastapi==0.97.0
 pip install uvicorn
+
+#database connect
+pip install sqlalchemy
+pip install pymysql
+pip install cryptography #mysql 접속시 인증, 암호화
