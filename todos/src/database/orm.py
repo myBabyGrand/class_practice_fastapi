@@ -27,5 +27,5 @@ class ToDo(Base):
         return self
 
     def undone(self):
-        self.is_done= false
+        self.is_done= False
         return self
