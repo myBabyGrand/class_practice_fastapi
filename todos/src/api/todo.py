@@ -1,21 +1,32 @@
+from http import HTTPStatus
 from typing import List
 
 from database.connection import get_db
 from database.orm import ToDo
-from database.repository import ToDoRepository
+from database.repository import ToDoRepository, UserRepository
 from fastapi import Depends, HTTPException, Body, APIRouter
 from schema.request import CreateTodoRequest
 from schema.response import ToDoListSchema, ToDoSchema
+from security import get_access_token
+from service.user import UserService
 from sqlalchemy.orm import Session
 
 router = APIRouter(prefix="/todos")
 
 @router.get("", status_code=200)
 def get_todos_handler(
+    access_token: str = Depends(get_access_token),
     order: str | None = None,
     todo_repo: ToDoRepository = Depends(ToDoRepository),
+    user_service: UserService = Depends(),
+    user_repo: UserRepository = Depends()
 ) -> ToDoListSchema:
-    todos: List[ToDo] = todo_repo.get_todos()
+    username: str = user_service.decode_jwt(access_token=access_token)
+    by_username : User = user_repo.get_user_by_username(username)
+    if not by_username:
+        raise HTTPException(status_code=HTTPStatus.NOT_FOUND, detail="User Not Found");
+
+    todos: List[ToDo] = by_username.todos
 
     if order and order == "DESC":
         return ToDoListSchema(

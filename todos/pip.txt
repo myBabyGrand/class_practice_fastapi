@@ -10,3 +10,9 @@ pip install cryptography #mysql 접속시 인증, 암호화
 pip install pytest
 pip install httpx #test client
 pip install pytest-mock
+
+#user
+pip install bcrypt==4.0.1
+
+#user-jwt
+pip install python-jose==3.3.0
