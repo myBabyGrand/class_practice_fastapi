@@ -14,3 +14,11 @@ class SignUpRequest(BaseModel):
 class LogInRequest(BaseModel):
     username: str
     password: str
+
+
+class CreateOTPRequest(BaseModel):
+    email_address: str
+
+class VerifyOTPRequest(BaseModel):
+    email_address: str
+    otp: int
